@@ -22,25 +22,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    //CHAMA O COMPONENTE VISUAL
+                   App()
                 }
             }
         }
     }
 }
 
+//Meu componente visual "APLICATIVO"
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun App(){
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Compose_projectTheme {
-        Greeting("Android")
-    }
 }

@@ -17,6 +17,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,8 +53,17 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(){
-            //Modifier: é o que permite a edição do elemento, no caso: a coluna
+
+    var valorGasolina by remember {
+        mutableStateOf("")
+    }
+
+    var valorAlcool by remember {
+        mutableStateOf("")
+    }
+
     Column(
+        //Modifier: é o que permite a edição do elemento, no caso: a coluna
         Modifier
             .background(color = Color(0xFF6650a4))
             .fillMaxSize(),
@@ -68,13 +81,39 @@ fun App(){
                     fontWeight = FontWeight.Bold
                 )
             )
-            Text(text = "Gasolina", style = TextStyle(
-                color = Color.Red,
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold
-            ))
-            TextField(value = "2.00", onValueChange = {})
-            TextField(value = "2.00", onValueChange = {})
+
+            if(valorAlcool.isNotBlank() && valorGasolina.isNotBlank())
+            {
+                val ehGasolina = valorAlcool.toDouble() / valorGasolina.toDouble() > 0.7
+                val alcoolOuGasolina = if(ehGasolina)
+                {
+                    "Gasolina"
+                }
+                else
+                {
+                    "Álcool"
+                }
+                Text(text = alcoolOuGasolina, style = TextStyle(
+                    color = Color.Red,
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold
+                ))
+            }
+
+            TextField(
+                value = valorGasolina,
+                onValueChange = {
+                    valorGasolina = it
+                },
+                label = {Text(text = "Álcool")}
+            )
+            TextField(
+                value = valorAlcool,
+                onValueChange = {
+                    valorAlcool = it
+                },
+                label = {Text(text = "Gasolina")}
+            )
         }
     }
 
